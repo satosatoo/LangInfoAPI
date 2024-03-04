@@ -1,6 +1,7 @@
 package com.example.WorldLangHubAPI.models;
 
 import com.example.WorldLangHubAPI.utils.ResourceType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,25 +31,36 @@ public class Resource {
 
     @ManyToOne
     @JoinColumn(name = "language_id")
+    @JsonIgnoreProperties("resources")
     private Language language;
 
     public Resource() {
     }
 
-    public Resource(String resourceName, String description, String link, ResourceType resourceType, Language language) {
+    public Resource(String resourceName, String description, String link, ResourceType resourceType) {
         this.resourceName = resourceName;
         this.description = description;
         this.link = link;
         this.resourceType = resourceType;
-        this.language = language;
     }
 
-    public Resource(int resourceId, String resourceName, String description, String link, ResourceType resourceType, Language language) {
+    public Resource(int resourceId, String resourceName, String description, String link, ResourceType resourceType) {
         this.resourceId = resourceId;
         this.resourceName = resourceName;
         this.description = description;
         this.link = link;
         this.resourceType = resourceType;
-        this.language = language;
+    }
+
+    @Override
+    public String toString() {
+        return "Resource{" +
+                "resourceId=" + resourceId +
+                ", resourceName='" + resourceName + '\'' +
+                ", description='" + description + '\'' +
+                ", link='" + link + '\'' +
+                ", resourceType=" + resourceType +
+                ", language=" + language.getLanguageName() +
+                '}';
     }
 }
