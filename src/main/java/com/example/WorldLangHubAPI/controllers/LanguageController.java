@@ -1,6 +1,7 @@
 package com.example.WorldLangHubAPI.controllers;
 
 import com.example.WorldLangHubAPI.models.Language;
+import com.example.WorldLangHubAPI.models.LanguageDto;
 import com.example.WorldLangHubAPI.services.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +36,8 @@ public class LanguageController {
     }
 
     @PutMapping("/{id}")
-    public Language updateLanguage(@RequestBody Language updatedLanguage, @PathVariable int id) {
-        return languageService.update(updatedLanguage, id);
+    public Language updateLanguage(@RequestBody LanguageDto updatedLanguageDto, @PathVariable int id) {
+        return languageService.update(updatedLanguageDto, id);
     }
 
     @DeleteMapping("/{id}")

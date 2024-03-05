@@ -3,6 +3,7 @@ package com.example.WorldLangHubAPI.models;
 import com.example.WorldLangHubAPI.utils.ResourceType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,7 @@ public class Resource {
     @Column(name = "resource_id")
     private int resourceId;
 
+    @NotNull
     @Column(name = "resource_name")
     private String resourceName;
 

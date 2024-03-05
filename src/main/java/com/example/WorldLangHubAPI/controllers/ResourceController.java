@@ -32,12 +32,12 @@ public class ResourceController {
 
     @PostMapping("/id/{id}")
     public Resource createResourceWithId(@RequestBody Resource resource, @PathVariable int id) {
-        return resourceService.saveWithId(resource, id);
+        return resourceService.save(resource, id);
     }
 
     @PostMapping("/name/{name}")
     public Resource createResourceWithName(@RequestBody Resource resource, @PathVariable String name) {
-        return resourceService.saveWithName(resource, name);
+        return resourceService.save(resource, name);
     }
 
     @PutMapping("/{id}")
