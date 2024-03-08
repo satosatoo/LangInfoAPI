@@ -22,4 +22,13 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with name " + username + " not found"));
     }
+
+
+
+
+    // add adding admin to user
+
+
+
+
 }
