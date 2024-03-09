@@ -15,7 +15,7 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
-    @GetMapping("/{name}")
+    @GetMapping("/{name}") // Ваши URL-адреса должны быть организованы логически и представлять ресурсы, с которыми работает ваше приложение. Например, /languages для списка языков и /resources/{languageId} для ресурсов, связанных с определенным языком.
     public Resource getResourceByName(@PathVariable String name) {
         return resourceService.findResourceByName(name);
     }
@@ -30,14 +30,14 @@ public class ResourceController {
         return resourceService.findAllResources();
     }
 
-    @PostMapping("/id/{id}")
-    public Resource createResourceWithId(@RequestBody Resource resource, @PathVariable int id) {
+    @PostMapping("/lang-id/{id}")
+    public Resource createResourceWithLangId(@RequestBody Resource resource, @PathVariable int id) {
         return resourceService.save(resource, id);
     }
 
-    @PostMapping("/name/{name}")
-    public Resource createResourceWithName(@RequestBody Resource resource, @PathVariable String name) {
-        return resourceService.save(resource, name);
+    @PostMapping("/lang-name/{name}")
+    public Resource createResourceWithLangName(@RequestBody Resource resource, @PathVariable String name) {
+        return resourceService.save(resource, name.toLowerCase());
     }
 
     @PutMapping("/{id}")

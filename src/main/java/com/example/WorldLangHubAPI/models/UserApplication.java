@@ -1,5 +1,6 @@
 package com.example.WorldLangHubAPI.models;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +31,9 @@ public class UserApplication implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> authorities;
 
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Resource> resources;
+
     public UserApplication() {
     }
 
@@ -44,6 +48,18 @@ public class UserApplication implements UserDetails {
         this.username = username;
         this.password = password;
         this.authorities = authorities;
+    }
+
+    public void setAuthorities(List<Role> authorities) {
+        this.authorities = authorities;
+    }
+
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<Resource> resources) {
+        this.resources = resources;
     }
 
     @Override
@@ -79,5 +95,16 @@ public class UserApplication implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "UserApplication{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", authorities=" + authorities +
+                ", resources=" + resources +
+                '}';
     }
 }
