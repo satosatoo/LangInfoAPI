@@ -1,7 +1,8 @@
 package com.example.WorldLangHubAPI.controllers;
 
-import com.example.WorldLangHubAPI.models.LoginResponseDto;
-import com.example.WorldLangHubAPI.models.RegistrationDto;
+import com.example.WorldLangHubAPI.dto.LoginResponseDto;
+import com.example.WorldLangHubAPI.dto.RegistrationDto;
+import com.example.WorldLangHubAPI.dto.UserInfoDto;
 import com.example.WorldLangHubAPI.models.UserApplication;
 import com.example.WorldLangHubAPI.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public UserApplication registerUser(@RequestBody RegistrationDto body) {
+    public UserInfoDto registerUser(@RequestBody RegistrationDto body) {
         return authenticationService.registerUser(body.getUsername(), body.getPassword());
     }
 

@@ -12,8 +12,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
 public class UserApplication implements UserDetails {
 
     @Id
@@ -48,6 +46,22 @@ public class UserApplication implements UserDetails {
         this.username = username;
         this.password = password;
         this.authorities = authorities;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setAuthorities(List<Role> authorities) {

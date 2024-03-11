@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "languages")
@@ -96,5 +97,16 @@ public class Language {
 
     public void setResources(List<Resource> resources) {
         this.resources = resources;
+    }
+
+    @Override
+    public String toString() {
+        return "Language{" +
+                "languageId=" + languageId +
+                ", languageName='" + languageName + '\'' +
+                ", languageCountries=" + languageCountries +
+                ", speakers=" + speakers +
+                ", resources=" + resources +
+                '}';
     }
 }

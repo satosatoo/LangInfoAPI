@@ -1,5 +1,6 @@
-package com.example.WorldLangHubAPI.models;
+package com.example.WorldLangHubAPI.dto;
 
+import com.example.WorldLangHubAPI.models.Resource;
 import lombok.Getter;
 import lombok.Setter;
 

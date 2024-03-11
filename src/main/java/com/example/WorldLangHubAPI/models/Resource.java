@@ -4,8 +4,6 @@ import com.example.WorldLangHubAPI.utils.ResourceType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "resources")

@@ -1,4 +1,4 @@
-package com.example.WorldLangHubAPI.models;
+package com.example.WorldLangHubAPI.dto;
 
 public class RegistrationDto {
 

@@ -1,7 +1,8 @@
 package com.example.WorldLangHubAPI.controllers;
 
+import com.example.WorldLangHubAPI.dto.LanguageInfoDto;
 import com.example.WorldLangHubAPI.models.Language;
-import com.example.WorldLangHubAPI.models.LanguageDto;
+import com.example.WorldLangHubAPI.dto.LanguageDto;
 import com.example.WorldLangHubAPI.services.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,28 +16,28 @@ public class LanguageController {
     @Autowired
     private LanguageService languageService;
 
-    @GetMapping("/{name}")
-    public Language getLanguageByName(@PathVariable String name) {
+    @GetMapping("/name/{name}")
+    public LanguageInfoDto getLanguageByName(@PathVariable String name) {
         return languageService.findLanguageByName(name);
     }
 
-    @GetMapping("/{id}")
-    public Language getLanguageByName(@PathVariable int id) {
+    @GetMapping("/id/{id}")
+    public LanguageInfoDto getLanguageById(@PathVariable int id) {
         return languageService.findLanguageById(id);
     }
 
     @GetMapping()
-    public List<Language> getLanguages() {
+    public List<LanguageInfoDto> getLanguages() {
         return languageService.findAllLanguages();
     }
 
     @PostMapping()
-    public Language createLanguage(@RequestBody Language language) {
+    public LanguageInfoDto createLanguage(@RequestBody Language language) {
         return languageService.save(language);
     }
 
     @PutMapping("/{id}")
-    public Language updateLanguage(@RequestBody LanguageDto updatedLanguageDto, @PathVariable int id) {
+    public LanguageInfoDto updateLanguage(@RequestBody LanguageDto updatedLanguageDto, @PathVariable int id) {
         return languageService.update(updatedLanguageDto, id);
     }
 

@@ -54,12 +54,10 @@ public class SecurityConfiguration {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> {
-                auth.requestMatchers(HttpMethod.GET, "/api/lang", "/api/resource").permitAll();
+                auth.requestMatchers(HttpMethod.GET, "/api/lang/**", "/api/resource/**").permitAll();
+                auth.requestMatchers("/api/auth/**").permitAll();
                 auth.requestMatchers(HttpMethod.POST, "/api/resource").hasAnyRole("USER", "ADMIN");
                 auth.requestMatchers("/api/lang", "/api/resource").hasRole("ADMIN");
-                auth.requestMatchers("/api/auth/**").permitAll();
-                auth.requestMatchers("/api/admin/**").hasRole("ADMIN");
-                auth.requestMatchers("/api/user/**").hasAnyRole("ADMIN", "USER");
                 auth.anyRequest().authenticated();
             });
 
