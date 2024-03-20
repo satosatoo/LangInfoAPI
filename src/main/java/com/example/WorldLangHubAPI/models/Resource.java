@@ -4,6 +4,7 @@ import com.example.WorldLangHubAPI.utils.ResourceType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Table(name = "resources")
@@ -20,10 +21,13 @@ public class Resource {
     @Column(name = "description")
     private String description;
 
+    @URL
     @Column(name = "link")
     private String link;
 
+    @NotNull
     @Column(name = "resource_type")
+    @Enumerated(EnumType.STRING)
     private ResourceType resourceType;
 
     @ManyToOne

@@ -3,10 +3,13 @@ package com.example.WorldLangHubAPI.models;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.ParameterScriptAssert;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.List;
@@ -22,10 +25,14 @@ public class Language {
     private int languageId;
 
     @NotNull
+    @NotEmpty
+    @Length(min = 4, max = 30)
     @Column(name = "language_name", unique = true)
     private String languageName;
 
     @NotNull
+    @NotEmpty
+    @ElementCollection
     @Column(name = "language_countries")
     private List<String> languageCountries;
 

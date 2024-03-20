@@ -2,6 +2,7 @@ package com.example.WorldLangHubAPI.models;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,9 +19,11 @@ public class UserApplication implements UserDetails {
     @Column(name = "user_id")
     private int userId;
 
-    private String username;
+    @NotBlank
+    private String username;   // validation
 
-    private String password;
+    @NotBlank
+    private String password;    // validation
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role_junction",
