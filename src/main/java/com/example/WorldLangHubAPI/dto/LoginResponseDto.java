@@ -1,7 +1,5 @@
 package com.example.WorldLangHubAPI.dto;
 
-import com.example.WorldLangHubAPI.models.UserApplication;
-
 public class LoginResponseDto {
     private UserInfoDto userInfoDto;
     private String jwt;

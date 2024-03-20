@@ -58,6 +58,8 @@ public class SecurityConfiguration {
                 auth.requestMatchers("/api/auth/**").permitAll();
                 auth.requestMatchers(HttpMethod.POST, "/api/resource").hasAnyRole("USER", "ADMIN");
                 auth.requestMatchers("/api/lang", "/api/resource").hasRole("ADMIN");
+                auth.requestMatchers("/api/user/").hasAnyRole("USER", "ADMIN");
+                auth.requestMatchers("/api/admin/**").hasRole("ADMIN");
                 auth.anyRequest().authenticated();
             });
 

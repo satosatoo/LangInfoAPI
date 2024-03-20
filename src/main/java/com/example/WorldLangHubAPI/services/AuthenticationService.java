@@ -3,6 +3,7 @@ package com.example.WorldLangHubAPI.services;
 import com.example.WorldLangHubAPI.dto.LoginResponseDto;
 import com.example.WorldLangHubAPI.dto.ResourceInfoDto;
 import com.example.WorldLangHubAPI.dto.UserInfoDto;
+import com.example.WorldLangHubAPI.models.Language;
 import com.example.WorldLangHubAPI.models.Resource;
 import com.example.WorldLangHubAPI.models.Role;
 import com.example.WorldLangHubAPI.models.UserApplication;
@@ -48,7 +49,10 @@ public class AuthenticationService {
         List<Role> authorities = new ArrayList<>();
         authorities.add(userRoles);
 
-        return customizedUserOutput(userRepository.save(new UserApplication(username, passwordEncoder.encode(password), authorities)));
+        UserApplication user = new UserApplication(username, passwordEncoder.encode(password), authorities);
+        user.setUserId(getNextUserId());
+
+        return customizedUserOutput(userRepository.save(user));
     }
 
     public LoginResponseDto loginUser(String username, String password) {
@@ -63,6 +67,8 @@ public class AuthenticationService {
         return new LoginResponseDto(customizedUserOutput(user), token);
     }
 
+
+
     public UserInfoDto customizedUserOutput(UserApplication user) {
         if (user != null) {
             UserInfoDto userInfoDto = new UserInfoDto();
@@ -76,5 +82,13 @@ public class AuthenticationService {
         } else {
             throw new EntityNotFoundException("User with id " + user.getUserId() + " not found");
         }
+    }
+
+    public int getNextUserId() {
+        UserApplication userApplication = userRepository.findFirstByOrderByUserIdDesc().orElse(null);
+        if (userApplication != null)
+            return userApplication.getUserId() + 1;
+        else
+            return 1;
     }
 }

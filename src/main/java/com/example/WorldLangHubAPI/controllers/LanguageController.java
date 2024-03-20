@@ -31,9 +31,14 @@ public class LanguageController {
         return languageService.findAllLanguages();
     }
 
+    @GetMapping("/speakers")
+    public List<LanguageInfoDto> getSortedLanguagesBySpeakers() {
+        return languageService.sortLanguagesBySpeakers();
+    }
+
     @PostMapping()
-    public LanguageInfoDto createLanguage(@RequestBody Language language) {
-        return languageService.save(language);
+    public LanguageInfoDto createLanguage(@RequestBody LanguageDto languageDto) {
+        return languageService.save(languageDto);
     }
 
     @PutMapping("/{id}")

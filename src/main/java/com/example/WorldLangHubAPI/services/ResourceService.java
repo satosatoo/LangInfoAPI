@@ -1,5 +1,6 @@
 package com.example.WorldLangHubAPI.services;
 
+import com.example.WorldLangHubAPI.dto.ResourceDto;
 import com.example.WorldLangHubAPI.dto.ResourceInfoDto;
 import com.example.WorldLangHubAPI.models.Language;
 import com.example.WorldLangHubAPI.models.Resource;
@@ -54,44 +55,42 @@ public class ResourceService {
         return resourceRepository.findAll().stream().map(this::customizedResourceOutput).toList();
     }
 
-    public ResourceInfoDto save(Resource resource, int langId) {
-        resource.setLanguage(languageRepository.findById(langId)
+    public ResourceInfoDto save(ResourceDto resourceDto, int langId) {
+        resourceDto.setLanguage(languageRepository.findById(langId)
                 .orElseThrow(() -> new EntityNotFoundException("Language with id " + langId + " not found")));
 
         UserApplication authUser = getAuthUser();
         if (authUser != null)
-            resource.setAuthor(authUser);
+            resourceDto.setAuthor(authUser);
         else
             throw new UnauthorizedException("User is not authenticated");
 
-        return customizedResourceOutput(resourceRepository.save(resource));
+        return customizedResourceOutput(resourceRepository.save(ResourceDto.fromResource(resourceDto)));
     }
 
-    public ResourceInfoDto save(Resource resource, String langName) {
-        resource.setLanguage(languageRepository.findByLanguageName(langName)
+    public ResourceInfoDto save(ResourceDto resourceDto, String langName) {
+        resourceDto.setLanguage(languageRepository.findByLanguageName(langName)
                 .orElseThrow(() -> new EntityNotFoundException("Language with name " + langName + " not found")));
 
         UserApplication authUser = getAuthUser();
         if (authUser != null)
-            resource.setAuthor(authUser);
+            resourceDto.setAuthor(authUser);
         else
             throw new UnauthorizedException("User is not authenticated");
 
-        return customizedResourceOutput(resourceRepository.save(resource));
+        resourceDto.setResourceId(getNextResourceId());
+
+        return customizedResourceOutput(resourceRepository.save(ResourceDto.fromResource(resourceDto)));
     }
 
     public void deleteResourceById(int id) {
         resourceRepository.deleteById(id);
     }
 
-    public ResourceInfoDto update(Resource updatedResource, int id) {
+    public ResourceInfoDto update(ResourceDto updatedResourceDto, int id) {
         Optional<Resource> existingResourceOptional = resourceRepository.findById(id);
         if (existingResourceOptional.isPresent()) {
-            Resource resource = existingResourceOptional.get();
-            resource.setResourceName(updatedResource.getResourceName());
-            resource.setDescription(updatedResource.getDescription());
-            resource.setLink(updatedResource.getLink());
-            return customizedResourceOutput(resourceRepository.save(resource));
+            return customizedResourceOutput(resourceRepository.save(ResourceDto.fromResource(updatedResourceDto)));
         } else {
             logger.error("Resource with id " + id + " not found");
             throw new EntityNotFoundException("Resource with id " + id + " not found");
@@ -128,5 +127,13 @@ public class ResourceService {
         } else {
             throw new EntityNotFoundException("Resource with id " + resource.getResourceId() + " not found");
         }
+    }
+
+    public int getNextResourceId() {
+        Resource resource = resourceRepository.findFirstByOrderByResourceIdDesc().orElse(null);
+        if (resource != null)
+            return resource.getResourceId() + 1;
+        else
+            return 1;
     }
 }

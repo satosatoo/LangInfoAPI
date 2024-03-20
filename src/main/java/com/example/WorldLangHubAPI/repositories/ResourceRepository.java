@@ -15,4 +15,6 @@ public interface ResourceRepository extends JpaRepository<Resource, Integer> {
 
     @Query(value = "SELECT * FROM resources WHERE language_id = ?1", nativeQuery = true)
     List<Resource> findResourcesByLanguageId(int languageId);
+
+    Optional<Resource> findFirstByOrderByResourceIdDesc();
 }

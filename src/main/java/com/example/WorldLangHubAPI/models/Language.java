@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.List;
@@ -17,7 +18,6 @@ import java.util.stream.Collectors;
 public class Language {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "language_id")
     private int languageId;
 
@@ -27,7 +27,7 @@ public class Language {
 
     @NotNull
     @Column(name = "language_countries")
-    private List<String> languageCountries; // possibility to add countries
+    private List<String> languageCountries;
 
     @Column(name = "speakers")
     private Long speakers;
@@ -72,7 +72,7 @@ public class Language {
     }
 
     public void setLanguageName(String languageName) {
-        this.languageName = languageName.toLowerCase();
+        this.languageName = languageName;
     }
 
     public List<String> getLanguageCountries() {

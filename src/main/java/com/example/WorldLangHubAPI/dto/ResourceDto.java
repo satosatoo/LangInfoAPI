@@ -1,45 +1,24 @@
-package com.example.WorldLangHubAPI.models;
+package com.example.WorldLangHubAPI.dto;
 
+import com.example.WorldLangHubAPI.models.Language;
+import com.example.WorldLangHubAPI.models.Resource;
+import com.example.WorldLangHubAPI.models.UserApplication;
 import com.example.WorldLangHubAPI.utils.ResourceType;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "resources")
-public class Resource {
+public class ResourceDto {
 
-    @Id
-    @Column(name = "resource_id")
     private int resourceId;
-
-    @NotNull
-    @Column(name = "resource_name")
     private String resourceName;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "link")
     private String link;
-
-    @Column(name = "resource_type")
     private ResourceType resourceType;
-
-    @ManyToOne
-    @JoinColumn(name = "language_id")
-    @JsonIgnoreProperties("resources")
     private Language language;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties("resources")
     private UserApplication author;
 
-    public Resource() {
+    public ResourceDto() {
     }
 
-    public Resource(String resourceName, String description, String link, ResourceType resourceType, Language language, UserApplication author) {
+    public ResourceDto(String resourceName, String description, String link, ResourceType resourceType, Language language, UserApplication author) {
         this.resourceName = resourceName;
         this.description = description;
         this.link = link;
@@ -48,7 +27,7 @@ public class Resource {
         this.author = author;
     }
 
-    public Resource(int resourceId, String resourceName, String description, String link, ResourceType resourceType, Language language, UserApplication author) {
+    public ResourceDto(int resourceId, String resourceName, String description, String link, ResourceType resourceType, Language language, UserApplication author) {
         this.resourceId = resourceId;
         this.resourceName = resourceName;
         this.description = description;
@@ -56,14 +35,6 @@ public class Resource {
         this.resourceType = resourceType;
         this.language = language;
         this.author = author;
-    }
-
-    public int getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(int resourceId) {
-        this.resourceId = resourceId;
     }
 
     public String getResourceName() {
@@ -114,16 +85,23 @@ public class Resource {
         this.author = author;
     }
 
-    @Override
-    public String toString() {
-        return "Resource{" +
-                "resourceId=" + resourceId +
-                ", resourceName='" + resourceName + '\'' +
-                ", description='" + description + '\'' +
-                ", link='" + link + '\'' +
-                ", resourceType=" + resourceType +
-                ", language=" + language +
-                ", author=" + author +
-                '}';
+    public int getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(int resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    public static Resource fromResource(ResourceDto resourceDto) {
+        return new Resource(
+                resourceDto.getResourceId(),
+                resourceDto.getResourceName(),
+                resourceDto.getDescription(),
+                resourceDto.getLink(),
+                resourceDto.getResourceType(),
+                resourceDto.getLanguage(),
+                resourceDto.getAuthor()
+        );
     }
 }

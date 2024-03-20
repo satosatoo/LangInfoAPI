@@ -1,5 +1,6 @@
 package com.example.WorldLangHubAPI.controllers;
 
+import com.example.WorldLangHubAPI.dto.ResourceDto;
 import com.example.WorldLangHubAPI.dto.ResourceInfoDto;
 import com.example.WorldLangHubAPI.models.Resource;
 import com.example.WorldLangHubAPI.repositories.LanguageRepository;
@@ -36,18 +37,18 @@ public class ResourceController {
     }
 
     @PostMapping("/lang-id/{id}")
-    public ResourceInfoDto createResource(@RequestBody Resource resource, @PathVariable int id) {
-        return resourceService.save(resource, id);
+    public ResourceInfoDto createResource(@RequestBody ResourceDto resourceDto, @PathVariable int id) {
+        return resourceService.save(resourceDto, id);
     }
 
     @PostMapping("/lang-name/{name}")
-    public ResourceInfoDto createResource(@RequestBody Resource resource, @PathVariable String name) {
-        return resourceService.save(resource, name.toLowerCase());
+    public ResourceInfoDto createResource(@RequestBody ResourceDto resourceDto, @PathVariable String name) {
+        return resourceService.save(resourceDto, name.toLowerCase());
     }
 
     @PutMapping("/{id}")
-    public ResourceInfoDto updateResource(@RequestBody Resource updatedResource, @PathVariable int id) {
-        return resourceService.update(updatedResource, id);
+    public ResourceInfoDto updateResource(@RequestBody ResourceDto updatedResourceDto, @PathVariable int id) {
+        return resourceService.update(updatedResourceDto, id);
     }
 
     @DeleteMapping("/{id}")
